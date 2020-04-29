@@ -375,6 +375,8 @@ public class XGBoost extends ModelBuilder<XGBoostModel,XGBoostModel.XGBoostParam
         model._output._sparse = isTrainDatasetSparse();
       }
 
+      model.initActualParamValuesAfterOutputSetup(isClassifier(), _nclass);
+
       XGBoostUtils.createFeatureMap(model, _train);
       XGBoostVariableImportance variableImportance = model.setupVarImp();
       try (XGBoostExecutor exec = makeExecutor(model)) {

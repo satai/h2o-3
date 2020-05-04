@@ -259,7 +259,7 @@ h2o.getModel <- function(model_id) {
   allparams_key_val[sapply(allparams_key_val, is.null)] <- NULL
   parameters_key_val[sapply(parameters_key_val, is.null)] <- NULL
     
-  # fill allparams, parameters, effective_allparams, effective_parameters
+  # fill allparams, parameters
   for (param in allparams_key_val) {if (!any(is.na(param[1]))) allparams[unlist(param[1])] <- param[2]}
   for (param in parameters_key_val) {if (!any(is.na(param[1]))) parameters[unlist(param[1])] <- param[2]}
 

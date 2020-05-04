@@ -32,7 +32,6 @@ class ModelBase(h2o_meta(Keyed)):
         self._xval_keys = None
         self._parms = {}  # internal, for object recycle
         self.parms = {}  # external
-        self._effective_parms = {}
         self._estimator_type = "unsupervised"
         self._future = False  # used by __repr__/show to query job state
         self._job = None  # used when _future is True

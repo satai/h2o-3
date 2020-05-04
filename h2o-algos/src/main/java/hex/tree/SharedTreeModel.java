@@ -639,19 +639,19 @@ public abstract class SharedTreeModel<
       case AUTO:
       case Enum:
       case SortByResponse:
-        return CategoricalEncoding.AUTO;
+          return CategoricalEncoding.AUTO;
       case OneHotExplicit:
-        return CategoricalEncoding.OneHotExplicit;
+          return CategoricalEncoding.OneHotExplicit;
       case Binary:
-        return CategoricalEncoding.Binary;
+          return CategoricalEncoding.Binary;
       case EnumLimited:
-        return CategoricalEncoding.EnumLimited;
+          return CategoricalEncoding.EnumLimited;
       case Eigen:
-        return CategoricalEncoding.Eigen;
+          return CategoricalEncoding.Eigen;
       case LabelEncoder:
-        return CategoricalEncoding.LabelEncoder;
+          return CategoricalEncoding.LabelEncoder;
       default:
-        return null;
+          return null;
     }
   }
   

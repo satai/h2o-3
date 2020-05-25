@@ -288,7 +288,7 @@ abstract public class ModelBuilder<M extends Model<M,P,O>, P extends Model.Param
         //set input parameters
         model.setInputParms(_input_parms);
         //set _fold_assignment param to null in case it was entered as AUTO and it wasn't set during the training
-        if (model._input_parms._fold_assignment == Model.Parameters.FoldAssignmentScheme.AUTO && model._parms._fold_assignment == Model.Parameters.FoldAssignmentScheme.AUTO) {
+        if (model._parms._evaluate_auto && model._input_parms._fold_assignment == Model.Parameters.FoldAssignmentScheme.AUTO && model._parms._fold_assignment == Model.Parameters.FoldAssignmentScheme.AUTO) {
           model._parms._fold_assignment = null;
         }
       }

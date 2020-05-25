@@ -32,7 +32,8 @@ public class KMeansV3 extends ClusteringModelBuilderSchema<KMeans,KMeansV3,KMean
         "max_runtime_secs",
         "categorical_encoding",
         "export_checkpoints_dir", 
-        "cluster_size_constraints"
+        "cluster_size_constraints", 
+        "evaluate_auto"
     };
 
     // Input fields

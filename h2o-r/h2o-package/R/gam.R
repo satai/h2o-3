@@ -108,6 +108,7 @@
 #' @param bs Basis function type for each gam predictors, 0 for cr
 #' @param scale Smoothing parameter for gam predictors
 #' @param keep_gam_cols \code{Logical}. Save keys of model matrix Defaults to FALSE.
+#' @param evaluate_auto \code{Logical}. Whether to evaluate input parameters of value AUTO. Defaults to TRUE.
 #' @examples
 #' \dontrun{
 #' h2o.init()
@@ -178,7 +179,8 @@ h2o.gam <- function(x,
                     knot_ids = NULL,
                     bs = NULL,
                     scale = NULL,
-                    keep_gam_cols = FALSE)
+                    keep_gam_cols = FALSE,
+                    evaluate_auto = TRUE)
 {
   # Validate required training_frame first and other frame args: should be a valid key or an H2OFrame object
   training_frame <- .validate.H2OFrame(training_frame, required=TRUE)
@@ -324,6 +326,8 @@ h2o.gam <- function(x,
     parms$scale <- scale
   if (!missing(keep_gam_cols))
     parms$keep_gam_cols <- keep_gam_cols
+  if (!missing(evaluate_auto))
+    parms$evaluate_auto <- evaluate_auto
 
   if( !missing(interactions) ) {
     # interactions are column names => as-is
@@ -409,6 +413,7 @@ h2o.gam <- function(x,
                                     bs = NULL,
                                     scale = NULL,
                                     keep_gam_cols = FALSE,
+                                    evaluate_auto = TRUE,
                                     segment_columns = NULL,
                                     segment_models_id = NULL,
                                     parallelism = 1)
@@ -559,6 +564,8 @@ h2o.gam <- function(x,
     parms$scale <- scale
   if (!missing(keep_gam_cols))
     parms$keep_gam_cols <- keep_gam_cols
+  if (!missing(evaluate_auto))
+    parms$evaluate_auto <- evaluate_auto
 
   if( !missing(interactions) ) {
     # interactions are column names => as-is

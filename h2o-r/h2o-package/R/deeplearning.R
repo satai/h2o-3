@@ -138,6 +138,7 @@
 #' @param elastic_averaging_moving_rate Elastic averaging moving rate (only if elastic averaging is enabled). Defaults to 0.9.
 #' @param elastic_averaging_regularization Elastic averaging regularization strength (only if elastic averaging is enabled). Defaults to 0.001.
 #' @param export_checkpoints_dir Automatically export generated models to this directory.
+#' @param evaluate_auto \code{Logical}. Whether to evaluate input parameters of value AUTO. Defaults to TRUE.
 #' @param verbose \code{Logical}. Print scoring history to the console (Metrics per epoch). Defaults to FALSE.
 #' @seealso \code{\link{predict.H2OModel}} for prediction
 #' @examples
@@ -239,6 +240,7 @@ h2o.deeplearning <- function(x,
                              elastic_averaging_moving_rate = 0.9,
                              elastic_averaging_regularization = 0.001,
                              export_checkpoints_dir = NULL,
+                             evaluate_auto = TRUE,
                              verbose = FALSE)
 {
   # Validate required training_frame first and other frame args: should be a valid key or an H2OFrame object
@@ -440,6 +442,8 @@ h2o.deeplearning <- function(x,
     parms$elastic_averaging_regularization <- elastic_averaging_regularization
   if (!missing(export_checkpoints_dir))
     parms$export_checkpoints_dir <- export_checkpoints_dir
+  if (!missing(evaluate_auto))
+    parms$evaluate_auto <- evaluate_auto
 
   # Error check and build model
   model <- .h2o.modelJob('deeplearning', parms, h2oRestApiVersion=3, verbose=verbose)
@@ -532,6 +536,7 @@ h2o.deeplearning <- function(x,
                                              elastic_averaging_moving_rate = 0.9,
                                              elastic_averaging_regularization = 0.001,
                                              export_checkpoints_dir = NULL,
+                                             evaluate_auto = TRUE,
                                              segment_columns = NULL,
                                              segment_models_id = NULL,
                                              parallelism = 1)
@@ -737,6 +742,8 @@ h2o.deeplearning <- function(x,
     parms$elastic_averaging_regularization <- elastic_averaging_regularization
   if (!missing(export_checkpoints_dir))
     parms$export_checkpoints_dir <- export_checkpoints_dir
+  if (!missing(evaluate_auto))
+    parms$evaluate_auto <- evaluate_auto
 
   # Build segment-models specific parameters
   segment_parms <- list()

@@ -205,7 +205,9 @@ public class DeepLearning extends ModelBuilder<DeepLearningModel,DeepLearningMod
   public class DeepLearningDriver extends Driver {
     @Override public void computeImpl() {
       init(true); //this can change the seed if it was set to -1
-      initActualParamValues();
+      if (_parms._evaluate_auto) {
+        initActualParamValues();
+      }
       Model.Parameters parmsToCheck = _parms.clone();
       // Something goes wrong
       if (error_count() > 0)
@@ -322,7 +324,9 @@ public class DeepLearning extends ModelBuilder<DeepLearningModel,DeepLearningMod
         }
       }
       trainModel(cp);
-      _parms._distribution = cp.model_info().get_params()._distribution;
+      if (_parms._evaluate_auto) {
+        _parms._distribution = cp.model_info().get_params()._distribution;
+      }
       for (Key k : removeMe) DKV.remove(k);
 
       // clean up, but don't delete weights and biases if user asked for export

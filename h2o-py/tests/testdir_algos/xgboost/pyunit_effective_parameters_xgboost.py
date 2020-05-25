@@ -58,6 +58,25 @@ def test_xgboost_effective_parameters():
     assert xgb1.parms['fold_assignment']['input_value'] == 'AUTO'
     assert xgb1.parms['fold_assignment']['actual_value'] == xgb2.parms['fold_assignment']['actual_value']
 
+    xgb1 = H2OXGBoostEstimator(training_frame=training_frame, learn_rate=0.7, booster='gbtree', seed=1, ntrees=2, nfolds=5, 
+                               evaluate_auto=False)
+    xgb1.train(x=x, y=y, training_frame=training_frame)
+
+    xgb2 = H2OXGBoostEstimator(training_frame=training_frame, learn_rate=0.7, booster='gbtree', seed=1, ntrees=2, distribution="bernoulli",
+                               categorical_encoding="OneHotInternal", nfolds=5, fold_assignment="Random", evaluate_auto=False)
+    xgb2.train(x=x, y=y, training_frame=training_frame)
+
+    assert xgb1.parms['distribution']['input_value'] == 'AUTO'
+    assert xgb1.parms['distribution']['actual_value'] == 'AUTO'
+    assert xgb1.logloss() == xgb2.logloss()
+    assert xgb1.parms['stopping_metric']['input_value'] == 'AUTO'
+    assert xgb1.parms['stopping_metric']['actual_value'] == 'AUTO'
+    assert xgb1.parms['categorical_encoding']['input_value'] == 'AUTO'
+    assert xgb1.parms['categorical_encoding']['actual_value'] == 'AUTO'
+    assert xgb1.parms['fold_assignment']['input_value'] == 'AUTO'
+    assert xgb1.parms['fold_assignment']['actual_value'] == 'AUTO'
+
+
 if __name__ == "__main__":
   pyunit_utils.standalone_test(test_xgboost_effective_parameters)
 else:

@@ -30,7 +30,7 @@ class H2ONaiveBayesEstimator(H2OEstimator):
                    "validation_frame", "response_column", "ignored_columns", "ignore_const_cols",
                    "score_each_iteration", "balance_classes", "class_sampling_factors", "max_after_balance_size",
                    "max_confusion_matrix_size", "max_hit_ratio_k", "laplace", "min_sdev", "eps_sdev", "min_prob",
-                   "eps_prob", "compute_metrics", "max_runtime_secs", "export_checkpoints_dir"}
+                   "eps_prob", "compute_metrics", "max_runtime_secs", "export_checkpoints_dir", "evaluate_auto"}
 
     def __init__(self, **kwargs):
         super(H2ONaiveBayesEstimator, self).__init__()
@@ -786,5 +786,20 @@ class H2ONaiveBayesEstimator(H2OEstimator):
     def export_checkpoints_dir(self, export_checkpoints_dir):
         assert_is_type(export_checkpoints_dir, None, str)
         self._parms["export_checkpoints_dir"] = export_checkpoints_dir
+
+
+    @property
+    def evaluate_auto(self):
+        """
+        Whether to evaluate input parameters of value AUTO.
+
+        Type: ``bool``  (default: ``True``).
+        """
+        return self._parms.get("evaluate_auto")
+
+    @evaluate_auto.setter
+    def evaluate_auto(self, evaluate_auto):
+        assert_is_type(evaluate_auto, None, bool)
+        self._parms["evaluate_auto"] = evaluate_auto
 
 

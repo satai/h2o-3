@@ -220,7 +220,9 @@ public class GBM extends SharedTree<GBMModel,GBMModel.GBMParameters,GBMModel.GBM
         _initialPrediction = getInitialValueQuantile(_parms._quantile_alpha);
       }
       _model._output._init_f = _initialPrediction; //always write the initial value here (not just for Bernoulli)
-      _model.initActualParamValuesAfterOutputSetup(_nclass, isClassifier());
+      if (_parms._evaluate_auto) {
+        _model.initActualParamValuesAfterOutputSetup(_nclass, isClassifier());
+      }
 
       // Set the initial prediction into the tree column 0
       if (_initialPrediction != 0.0) {

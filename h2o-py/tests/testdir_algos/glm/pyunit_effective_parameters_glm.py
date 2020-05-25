@@ -28,6 +28,11 @@ def test_glm_effective_parameters():
     assert glm.parms['fold_assignment']['input_value'] == 'AUTO'
     assert glm.parms['fold_assignment']['actual_value'] == 'Random'
 
+    glm = H2OGeneralizedLinearEstimator(nfolds=nfolds, family=family, evaluate_auto=False)
+    glm.train(x=predictors, y=response_col, training_frame=cars)
+    assert glm.parms['fold_assignment']['input_value'] == 'AUTO'
+    assert glm.parms['fold_assignment']['actual_value'] == 'AUTO'
+
 if __name__ == "__main__":
   pyunit_utils.standalone_test(test_glm_effective_parameters)
 else:

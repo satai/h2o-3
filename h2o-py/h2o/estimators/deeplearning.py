@@ -50,7 +50,8 @@ class H2ODeepLearningEstimator(H2OEstimator):
                    "shuffle_training_data", "missing_values_handling", "quiet_mode", "autoencoder", "sparse",
                    "col_major", "average_activation", "sparsity_beta", "max_categorical_features", "reproducible",
                    "export_weights_and_biases", "mini_batch_size", "categorical_encoding", "elastic_averaging",
-                   "elastic_averaging_moving_rate", "elastic_averaging_regularization", "export_checkpoints_dir"}
+                   "elastic_averaging_moving_rate", "elastic_averaging_regularization", "export_checkpoints_dir",
+                   "evaluate_auto"}
 
     def __init__(self, **kwargs):
         super(H2ODeepLearningEstimator, self).__init__()
@@ -2859,6 +2860,21 @@ class H2ODeepLearningEstimator(H2OEstimator):
     def export_checkpoints_dir(self, export_checkpoints_dir):
         assert_is_type(export_checkpoints_dir, None, str)
         self._parms["export_checkpoints_dir"] = export_checkpoints_dir
+
+
+    @property
+    def evaluate_auto(self):
+        """
+        Whether to evaluate input parameters of value AUTO.
+
+        Type: ``bool``  (default: ``True``).
+        """
+        return self._parms.get("evaluate_auto")
+
+    @evaluate_auto.setter
+    def evaluate_auto(self, evaluate_auto):
+        assert_is_type(evaluate_auto, None, bool)
+        self._parms["evaluate_auto"] = evaluate_auto
 
 
 

@@ -30,6 +30,14 @@ def test_gam_effective_parameters():
     assert gam.parms['fold_assignment']['input_value'] == 'AUTO'
     assert gam.parms['fold_assignment']['actual_value'] is None
 
+    gam = H2OGeneralizedAdditiveEstimator(family='binomial', gam_columns=["C11", "C12", "C13"],  scale = [1,1,1], num_knots=[5,6,7],
+                                          standardize=True, Lambda=[0], alpha=[0], max_iterations=3, evaluate_auto=False)
+    gam.train(x=["C1","C2"], y="C21", training_frame=h2o_data)
+
+    assert gam.parms['solver']['input_value'] == 'AUTO'
+    assert gam.parms['solver']['actual_value'] == 'AUTO'
+    assert gam.parms['fold_assignment']['input_value'] == 'AUTO'
+    assert gam.parms['fold_assignment']['actual_value'] == 'AUTO'
 
 
 if __name__ == "__main__":

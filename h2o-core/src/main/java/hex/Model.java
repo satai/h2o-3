@@ -219,6 +219,7 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
     public boolean _keep_cross_validation_fold_assignment = false;
     public boolean _parallelize_cross_validation = true;
     public boolean _auto_rebalance = true;
+    public boolean _evaluate_auto = true;
 
     public void setTrain(Key<Frame> train) {
       this._train = train;
@@ -954,7 +955,9 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
     super(selfKey);
     assert parms != null;
     _parms = parms;
-    initActualParamValues();
+    if (_parms._evaluate_auto) {
+      initActualParamValues();
+    }
     _output = output;  // Output won't be set if we're assert output != null;
     if (_output != null)
       _output.startClock();

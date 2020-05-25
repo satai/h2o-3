@@ -37,7 +37,6 @@ def test_gbm_effective_parameters():
     assert gbm1.parms['histogram_type']['actual_value'] == gbm2.parms['histogram_type']['actual_value']
     assert gbm1.parms['categorical_encoding']['input_value'] == 'AUTO'
     assert gbm1.parms['categorical_encoding']['actual_value'] == gbm2.parms['categorical_encoding']['actual_value']
-   
 
     gbm1 = H2OGradientBoostingEstimator(seed = 1234, nfolds=5)
     gbm1.train(x=predictors, y=response, training_frame=train, validation_frame=valid)
@@ -58,6 +57,27 @@ def test_gbm_effective_parameters():
     assert gbm1.parms['categorical_encoding']['input_value'] == 'AUTO'
     assert gbm1.parms['categorical_encoding']['actual_value'] == gbm2.parms['categorical_encoding']['actual_value']
 
+    gbm1 = H2OGradientBoostingEstimator(seed = 1234, nfolds=5, evaluate_auto=False)
+    gbm1.train(x=predictors, y=response, training_frame=train, validation_frame=valid)
+
+    gbm2 = H2OGradientBoostingEstimator(seed = 1234, nfolds=5, fold_assignment='Random', distribution="bernoulli",
+                                    histogram_type="UniformAdaptive", categorical_encoding="Enum", evaluate_auto=False)
+    gbm2.train(x=predictors, y=response, training_frame=train, validation_frame=valid)
+
+    assert gbm1.logloss() == gbm2.logloss()
+    assert gbm1.parms['distribution']['input_value'] == 'AUTO'
+    # distribution value was being set before
+    assert gbm1.parms['distribution']['actual_value'] == gbm2.parms['distribution']['actual_value']
+    assert gbm1.parms['stopping_metric']['input_value'] == 'AUTO'
+    assert gbm1.parms['stopping_metric']['actual_value'] == 'AUTO'
+    assert gbm1.parms['histogram_type']['input_value'] == 'AUTO'
+    assert gbm1.parms['histogram_type']['actual_value'] == 'AUTO'
+    assert gbm1.parms['fold_assignment']['input_value'] == 'AUTO'
+    assert gbm1.parms['fold_assignment']['actual_value'] == 'AUTO'
+    assert gbm1.parms['categorical_encoding']['input_value'] == 'AUTO'
+    assert gbm1.parms['categorical_encoding']['actual_value'] == 'AUTO'
+
+
     frame = h2o.import_file(path=pyunit_utils.locate("smalldata/prostate/prostate.csv"))
     frame.pop('ID')
     frame[frame['VOL'],'VOL'] = None
@@ -69,8 +89,8 @@ def test_gbm_effective_parameters():
     gbm = H2OGradientBoostingEstimator(ntrees=5, max_depth=3)
     gbm.train(x=list(range(2,train.ncol)), y="CAPSULE", training_frame=train, validation_frame=test)
 
-    assert gbm1.parms['categorical_encoding']['input_value'] == 'AUTO'
-    assert gbm1.parms['categorical_encoding']['actual_value'] == 'Enum'
+    assert gbm.parms['categorical_encoding']['input_value'] == 'AUTO'
+    assert gbm.parms['categorical_encoding']['actual_value'] == 'Enum'
 
 if __name__ == "__main__":
   pyunit_utils.standalone_test(test_gbm_effective_parameters)

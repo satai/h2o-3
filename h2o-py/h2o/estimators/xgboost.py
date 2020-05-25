@@ -26,14 +26,14 @@ class H2OXGBoostEstimator(H2OEstimator):
                    "fold_assignment", "fold_column", "response_column", "ignored_columns", "ignore_const_cols",
                    "offset_column", "weights_column", "stopping_rounds", "stopping_metric", "stopping_tolerance",
                    "max_runtime_secs", "seed", "distribution", "tweedie_power", "categorical_encoding", "quiet_mode",
-                   "checkpoint", "export_checkpoints_dir", "ntrees", "max_depth", "min_rows", "min_child_weight",
-                   "learn_rate", "eta", "sample_rate", "subsample", "col_sample_rate", "colsample_bylevel",
-                   "col_sample_rate_per_tree", "colsample_bytree", "colsample_bynode", "max_abs_leafnode_pred",
-                   "max_delta_step", "monotone_constraints", "score_tree_interval", "min_split_improvement", "gamma",
-                   "nthread", "save_matrix_directory", "build_tree_one_node", "calibrate_model", "calibration_frame",
-                   "max_bins", "max_leaves", "sample_type", "normalize_type", "rate_drop", "one_drop", "skip_drop",
-                   "tree_method", "grow_policy", "booster", "reg_lambda", "reg_alpha", "dmatrix_type", "backend",
-                   "gpu_id"}
+                   "checkpoint", "export_checkpoints_dir", "evaluate_auto", "ntrees", "max_depth", "min_rows",
+                   "min_child_weight", "learn_rate", "eta", "sample_rate", "subsample", "col_sample_rate",
+                   "colsample_bylevel", "col_sample_rate_per_tree", "colsample_bytree", "colsample_bynode",
+                   "max_abs_leafnode_pred", "max_delta_step", "monotone_constraints", "score_tree_interval",
+                   "min_split_improvement", "gamma", "nthread", "save_matrix_directory", "build_tree_one_node",
+                   "calibrate_model", "calibration_frame", "max_bins", "max_leaves", "sample_type", "normalize_type",
+                   "rate_drop", "one_drop", "skip_drop", "tree_method", "grow_policy", "booster", "reg_lambda",
+                   "reg_alpha", "dmatrix_type", "backend", "gpu_id"}
 
     def __init__(self, **kwargs):
         super(H2OXGBoostEstimator, self).__init__()
@@ -851,6 +851,21 @@ class H2OXGBoostEstimator(H2OEstimator):
     def export_checkpoints_dir(self, export_checkpoints_dir):
         assert_is_type(export_checkpoints_dir, None, str)
         self._parms["export_checkpoints_dir"] = export_checkpoints_dir
+
+
+    @property
+    def evaluate_auto(self):
+        """
+        Whether to evaluate input parameters of value AUTO.
+
+        Type: ``bool``  (default: ``True``).
+        """
+        return self._parms.get("evaluate_auto")
+
+    @evaluate_auto.setter
+    def evaluate_auto(self, evaluate_auto):
+        assert_is_type(evaluate_auto, None, bool)
+        self._parms["evaluate_auto"] = evaluate_auto
 
 
     @property

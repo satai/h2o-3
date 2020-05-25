@@ -63,6 +63,10 @@ public class ModelParametersSchemaV3<P extends Model.Parameters, S extends Model
       help = "Whether to keep the cross-validation fold assignment.")
   public boolean keep_cross_validation_fold_assignment;
 
+  @API(level = API.Level.expert, direction = API.Direction.INOUT,
+          help = "Whether to evaluate input parameters of value AUTO.")
+  public boolean evaluate_auto;
+
   @API(help="Allow parallel training of cross-validation models", direction=API.Direction.INOUT, level = API.Level.expert)
   public boolean parallelize_cross_validation;
 

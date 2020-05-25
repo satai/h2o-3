@@ -40,6 +40,25 @@ def test_deep_learning_effective_parameters():
     assert dl1.parms['fold_assignment']['input_value'] == 'AUTO'
     assert dl1.parms['fold_assignment']['actual_value'] is None
 
+    dl1 = H2ODeepLearningEstimator(loss="CrossEntropy", epochs=1000, hidden=[20,20,20], seed=1234, reproducible=True, 
+                                   stopping_rounds=5, evaluate_auto=False)
+    dl1.train(x=list(range(1, train_data.ncol)), y="Angaus", training_frame=train_data, validation_frame=test_data)
+
+    dl2 = H2ODeepLearningEstimator(loss="CrossEntropy", epochs=1000, hidden=[20,20,20], seed=1234, reproducible=True,
+                                   distribution="bernoulli", categorical_encoding="OneHotInternal", stopping_rounds=5, 
+                                   evaluate_auto=False)
+    dl2.train(x=list(range(1, train_data.ncol)), y="Angaus", training_frame=train_data, validation_frame=test_data)
+
+    assert dl1.parms['distribution']['input_value'] == 'AUTO'
+    assert dl1.parms['distribution']['actual_value'] == 'AUTO'
+    assert dl1.logloss() == dl2.logloss()
+    assert dl1.parms['stopping_metric']['input_value'] == 'AUTO'
+    assert dl1.parms['stopping_metric']['actual_value'] == 'AUTO'
+    assert dl1.parms['categorical_encoding']['input_value'] == 'AUTO'
+    assert dl1.parms['categorical_encoding']['actual_value'] == 'AUTO'
+    assert dl1.parms['fold_assignment']['input_value'] == 'AUTO'
+    assert dl1.parms['fold_assignment']['actual_value'] == 'AUTO'
+
     dl1 = H2ODeepLearningEstimator(loss="CrossEntropy", epochs=1000, hidden=[20,20,20], seed=1234, reproducible=True, nfolds=5)
     dl1.train(x=list(range(1,train_data.ncol)), y="Angaus", training_frame=train_data, validation_frame=test_data)
 

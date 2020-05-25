@@ -40,7 +40,7 @@ class H2OGeneralizedLinearEstimator(H2OEstimator):
                    "startval", "calc_like", "HGLM", "prior", "lambda_min_ratio", "beta_constraints",
                    "max_active_predictors", "interactions", "interaction_pairs", "obj_reg", "export_checkpoints_dir",
                    "balance_classes", "class_sampling_factors", "max_after_balance_size", "max_confusion_matrix_size",
-                   "max_hit_ratio_k", "max_runtime_secs", "custom_metric_func"}
+                   "max_hit_ratio_k", "max_runtime_secs", "custom_metric_func", "evaluate_auto"}
 
     def __init__(self, **kwargs):
         super(H2OGeneralizedLinearEstimator, self).__init__()
@@ -1717,6 +1717,21 @@ class H2OGeneralizedLinearEstimator(H2OEstimator):
     def custom_metric_func(self, custom_metric_func):
         assert_is_type(custom_metric_func, None, str)
         self._parms["custom_metric_func"] = custom_metric_func
+
+
+    @property
+    def evaluate_auto(self):
+        """
+        Whether to evaluate input parameters of value AUTO.
+
+        Type: ``bool``  (default: ``True``).
+        """
+        return self._parms.get("evaluate_auto")
+
+    @evaluate_auto.setter
+    def evaluate_auto(self, evaluate_auto):
+        assert_is_type(evaluate_auto, None, bool)
+        self._parms["evaluate_auto"] = evaluate_auto
 
 
     @property

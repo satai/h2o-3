@@ -51,6 +51,7 @@
 #' @param quiet_mode \code{Logical}. Enable quiet mode Defaults to TRUE.
 #' @param checkpoint Model checkpoint to resume training with.
 #' @param export_checkpoints_dir Automatically export generated models to this directory.
+#' @param evaluate_auto \code{Logical}. Whether to evaluate input parameters of value AUTO. Defaults to TRUE.
 #' @param ntrees (same as n_estimators) Number of trees. Defaults to 50.
 #' @param max_depth Maximum tree depth. Defaults to 6.
 #' @param min_rows (same as min_child_weight) Fewest allowed (weighted) observations in a leaf. Defaults to 1.
@@ -151,6 +152,7 @@ h2o.xgboost <- function(x,
                         quiet_mode = TRUE,
                         checkpoint = NULL,
                         export_checkpoints_dir = NULL,
+                        evaluate_auto = TRUE,
                         ntrees = 50,
                         max_depth = 6,
                         min_rows = 1,
@@ -262,6 +264,8 @@ h2o.xgboost <- function(x,
     parms$checkpoint <- checkpoint
   if (!missing(export_checkpoints_dir))
     parms$export_checkpoints_dir <- export_checkpoints_dir
+  if (!missing(evaluate_auto))
+    parms$evaluate_auto <- evaluate_auto
   if (!missing(ntrees))
     parms$ntrees <- ntrees
   if (!missing(max_depth))
@@ -370,6 +374,7 @@ h2o.xgboost <- function(x,
                                         quiet_mode = TRUE,
                                         checkpoint = NULL,
                                         export_checkpoints_dir = NULL,
+                                        evaluate_auto = TRUE,
                                         ntrees = 50,
                                         max_depth = 6,
                                         min_rows = 1,
@@ -485,6 +490,8 @@ h2o.xgboost <- function(x,
     parms$checkpoint <- checkpoint
   if (!missing(export_checkpoints_dir))
     parms$export_checkpoints_dir <- export_checkpoints_dir
+  if (!missing(evaluate_auto))
+    parms$evaluate_auto <- evaluate_auto
   if (!missing(ntrees))
     parms$ntrees <- ntrees
   if (!missing(max_depth))

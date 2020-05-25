@@ -375,7 +375,9 @@ public class GAM extends ModelBuilder<GAMModel, GAMModel.GAMParameters, GAMModel
         }
         _job.update(1, "calling GLM to build GAM model...");
         GLMModel glmModel = buildGLMModel(_parms, newTFrame); // obtained GLM model
-        model.initActualParamValuesAfterGlmCreation();
+        if (_parms._evaluate_auto) {
+          model.initActualParamValuesAfterGlmCreation();
+        }
         Scope.track_generic(glmModel);
         _job.update(0, "Building out GAM model...");
         fillOutGAMModel(glmModel, model, dinfo); // build up GAM model
@@ -499,7 +501,7 @@ public class GAM extends ModelBuilder<GAMModel, GAMModel.GAMParameters, GAMModel
       model._ymu = new double[glmModel._ymu.length];
       System.arraycopy(glmModel._ymu, 0, model._ymu, 0, glmModel._ymu.length);
       // pass GLM _solver value to GAM so that GAM effective _solver value can be set
-      if (model._parms._solver == GLMParameters.Solver.AUTO) {
+      if (model._parms._evaluate_auto && model._parms._solver == GLMParameters.Solver.AUTO) {
         model._parms._solver = glmModel._parms._solver;
       }
     }

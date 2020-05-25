@@ -40,7 +40,7 @@ class H2OGeneralizedAdditiveEstimator(H2OEstimator):
                    "interactions", "interaction_pairs", "obj_reg", "export_checkpoints_dir", "balance_classes",
                    "class_sampling_factors", "max_after_balance_size", "max_confusion_matrix_size", "max_hit_ratio_k",
                    "max_runtime_secs", "custom_metric_func", "num_knots", "knot_ids", "gam_columns", "bs", "scale",
-                   "keep_gam_cols"}
+                   "keep_gam_cols", "evaluate_auto"}
 
     def __init__(self, **kwargs):
         super(H2OGeneralizedAdditiveEstimator, self).__init__()
@@ -948,6 +948,21 @@ class H2OGeneralizedAdditiveEstimator(H2OEstimator):
     def keep_gam_cols(self, keep_gam_cols):
         assert_is_type(keep_gam_cols, None, bool)
         self._parms["keep_gam_cols"] = keep_gam_cols
+
+
+    @property
+    def evaluate_auto(self):
+        """
+        Whether to evaluate input parameters of value AUTO.
+
+        Type: ``bool``  (default: ``True``).
+        """
+        return self._parms.get("evaluate_auto")
+
+    @evaluate_auto.setter
+    def evaluate_auto(self, evaluate_auto):
+        assert_is_type(evaluate_auto, None, bool)
+        self._parms["evaluate_auto"] = evaluate_auto
 
 
     @property

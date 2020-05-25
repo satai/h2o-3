@@ -30,6 +30,15 @@ def test_k_means_effective_parameters():
     assert km1.parms['fold_assignment']['input_value'] == 'AUTO'
     assert km1.parms['fold_assignment']['actual_value'] == km2.parms['fold_assignment']['actual_value']
 
+    km1 = H2OKMeansEstimator(seed=1234, categorical_encoding="AUTO", nfolds=5, evaluate_auto=False)
+    km1.train(x=["economy_20mpg", "displacement", "power", "weight", "acceleration", "year"], training_frame=cars)
+
+    assert km1.parms['categorical_encoding']['input_value'] == 'AUTO'
+    assert km1.parms['categorical_encoding']['actual_value'] == 'AUTO'
+    assert km1.parms['fold_assignment']['input_value'] == 'AUTO'
+    assert km1.parms['fold_assignment']['actual_value'] == 'AUTO'
+
+
 if __name__ == "__main__":
   pyunit_utils.standalone_test(test_k_means_effective_parameters)
 else:

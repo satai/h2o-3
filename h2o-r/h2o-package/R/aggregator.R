@@ -21,6 +21,7 @@
 #' @param num_iteration_without_new_exemplar The number of iterations to run before aggregator exits if the number of exemplars collected didn't change
 #'        Defaults to 500.
 #' @param export_checkpoints_dir Automatically export generated models to this directory.
+#' @param evaluate_auto \code{Logical}. Whether to evaluate input parameters of value AUTO. Defaults to TRUE.
 #' @examples
 #' \dontrun{
 #' library(h2o)
@@ -52,7 +53,8 @@ h2o.aggregator <- function(training_frame,
                            categorical_encoding = c("AUTO", "Enum", "OneHotInternal", "OneHotExplicit", "Binary", "Eigen", "LabelEncoder", "SortByResponse", "EnumLimited"),
                            save_mapping_frame = FALSE,
                            num_iteration_without_new_exemplar = 500,
-                           export_checkpoints_dir = NULL)
+                           export_checkpoints_dir = NULL,
+                           evaluate_auto = TRUE)
 {
   # Validate required training_frame first and other frame args: should be a valid key or an H2OFrame object
   training_frame <- .validate.H2OFrame(training_frame, required=TRUE)
@@ -81,6 +83,8 @@ h2o.aggregator <- function(training_frame,
     parms$num_iteration_without_new_exemplar <- num_iteration_without_new_exemplar
   if (!missing(export_checkpoints_dir))
     parms$export_checkpoints_dir <- export_checkpoints_dir
+  if (!missing(evaluate_auto))
+    parms$evaluate_auto <- evaluate_auto
 
   # Error check and build model
   model <- .h2o.modelJob('aggregator', parms, h2oRestApiVersion=99, verbose=FALSE)
@@ -98,6 +102,7 @@ h2o.aggregator <- function(training_frame,
                                            save_mapping_frame = FALSE,
                                            num_iteration_without_new_exemplar = 500,
                                            export_checkpoints_dir = NULL,
+                                           evaluate_auto = TRUE,
                                            segment_columns = NULL,
                                            segment_models_id = NULL,
                                            parallelism = 1)
@@ -131,6 +136,8 @@ h2o.aggregator <- function(training_frame,
     parms$num_iteration_without_new_exemplar <- num_iteration_without_new_exemplar
   if (!missing(export_checkpoints_dir))
     parms$export_checkpoints_dir <- export_checkpoints_dir
+  if (!missing(evaluate_auto))
+    parms$evaluate_auto <- evaluate_auto
 
   # Build segment-models specific parameters
   segment_parms <- list()

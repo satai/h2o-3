@@ -28,7 +28,7 @@ class H2OIsolationForestEstimator(H2OEstimator):
                    "ignore_const_cols", "ntrees", "max_depth", "min_rows", "max_runtime_secs", "seed",
                    "build_tree_one_node", "mtries", "sample_size", "sample_rate", "col_sample_rate_change_per_level",
                    "col_sample_rate_per_tree", "categorical_encoding", "stopping_rounds", "stopping_metric",
-                   "stopping_tolerance", "export_checkpoints_dir"}
+                   "stopping_tolerance", "export_checkpoints_dir", "evaluate_auto"}
 
     def __init__(self, **kwargs):
         super(H2OIsolationForestEstimator, self).__init__()
@@ -591,5 +591,20 @@ class H2OIsolationForestEstimator(H2OEstimator):
     def export_checkpoints_dir(self, export_checkpoints_dir):
         assert_is_type(export_checkpoints_dir, None, str)
         self._parms["export_checkpoints_dir"] = export_checkpoints_dir
+
+
+    @property
+    def evaluate_auto(self):
+        """
+        Whether to evaluate input parameters of value AUTO.
+
+        Type: ``bool``  (default: ``True``).
+        """
+        return self._parms.get("evaluate_auto")
+
+    @evaluate_auto.setter
+    def evaluate_auto(self, evaluate_auto):
+        assert_is_type(evaluate_auto, None, bool)
+        self._parms["evaluate_auto"] = evaluate_auto
 
 

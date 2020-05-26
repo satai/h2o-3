@@ -7,6 +7,9 @@
 """
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import os
+from codecs import open
+
 from h2o.h2o import (connect, init, api, connection,
                      lazy_import, upload_file, import_file, import_sql_table, import_sql_select, import_hive_table,
                      parse_setup, parse_raw, assign, deep_copy, get_model, get_grid, get_frame,
@@ -26,8 +29,6 @@ from h2o.h2o import (connect, init, api, connection,
 from h2o.frame import H2OFrame  # NOQA
 from h2o.utils.shared_utils import mojo_predict_csv, mojo_predict_pandas
 
-import os
-from codecs import open
 here = os.path.abspath(os.path.dirname(__file__))
 
 try:

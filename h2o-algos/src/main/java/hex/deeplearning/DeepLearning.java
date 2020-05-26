@@ -215,9 +215,8 @@ public class DeepLearning extends ModelBuilder<DeepLearningModel,DeepLearningMod
         throw H2OModelBuilderIllegalArgumentException.makeFromBuilder(DeepLearning.this);
       buildModel();
       //check that _parms isn't changed during DL model training
-      Model.Parameters parmsToCheck2 = _parms.clone();
       //check that all members of _param apart of those which were originally set to AUTO haven't changed during DL model training
-      checkNonAutoParmsNotChanged(parmsToCheck, parmsToCheck2);
+      checkNonAutoParmsNotChanged(parmsToCheck, _parms);
     }
 
     public void checkNonAutoParmsNotChanged(Model.Parameters params1, Model.Parameters params2){

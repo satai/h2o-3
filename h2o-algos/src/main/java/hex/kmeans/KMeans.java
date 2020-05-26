@@ -1,7 +1,6 @@
 package hex.kmeans;
 
 import hex.*;
-import hex.util.EffectiveParametersUtils;
 import hex.util.LinearAlgebraUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

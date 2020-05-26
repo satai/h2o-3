@@ -202,7 +202,7 @@ abstract public class ModelBuilder<M extends Model<M,P,O>, P extends Model.Param
   /** All the parameters required to build the model. */
   public P _parms;              // Not final, so CV can set-after-clone
 
-  /** All the parameters required to build the model. */
+  /** All the parameters required to build the model conserved in the input form, with AUTO values not evaluated yet. */
   public P _input_parms;
 
   /** Training frame: derived from the parameter's training frame, excluding
@@ -772,8 +772,7 @@ abstract public class ModelBuilder<M extends Model<M,P,O>, P extends Model.Param
       mbs[i] = cvModel.scoreMetrics(adaptFr);
       if (nclasses() == 2 /* need holdout predictions for gains/lift table */
               || _parms._keep_cross_validation_predictions
-              || (_parms._distribution== DistributionFamily.huber
-              || _parms._distribution == DistributionFamily.AUTO/*need to compute quantiles on abs error of holdout predictions*/)) {
+              || (_parms._distribution== DistributionFamily.huber /*need to compute quantiles on abs error of holdout predictions*/)) {
         String predName = cvModelBuilders[i].getPredictionKey();
         cvModel.predictScoreImpl(cvValid, adaptFr, predName, _job, true, CFuncRef.NOP);
         DKV.put(cvModel);

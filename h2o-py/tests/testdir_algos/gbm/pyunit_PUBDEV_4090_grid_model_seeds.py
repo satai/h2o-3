@@ -65,6 +65,9 @@ def random_grid_model_seeds_PUBDEV_4090():
     air_grid1.train(x=myX, y="IsDepDelayed", training_frame=air_hex, distribution="bernoulli")
     air_grid2.train(x=myX, y="IsDepDelayed", training_frame=air_hex, distribution="bernoulli")
 
+    print("Grid 1 has length " + str(len(air_grid1)))
+    print("Grid 2 has length " + str(len(air_grid2)))
+
     # expect both models to render the same metrics as they use the same model seed, search criteria seed
     model_seeds1 = pyunit_utils.model_seed_sorted(air_grid1)
     model_seeds2 = pyunit_utils.model_seed_sorted(air_grid2)
@@ -82,12 +85,35 @@ def random_grid_model_seeds_PUBDEV_4090():
     for ind in range(0, len(air_grid2.models)):
         if air_grid2.models[ind].full_parameters['seed']['actual_value']==model1seed:
             index2=ind
+            print("index of the model in grid2 with the same seed as model grid.models[0] was set to " + str(index2))
             break
 
     metric_list1 = pyunit_utils.extract_scoring_history_field(air_grid1.models[0], "training_rmse", False)
     metric_list2 = pyunit_utils.extract_scoring_history_field(air_grid2.models[index2], "training_rmse", False)
     print(metric_list1)
     print(metric_list2)
+    
+    print("Input values and actual values of some parameters of models which rmse is being compared:")
+    
+    print("Model 1 parameters:")
+    print("distribution: input_value = " + str(air_grid1.models[0].full_parameters['distribution']['input_value']) + ",  actual_value = " + str(air_grid1.models[0].full_parameters['distribution']['actual_value']))
+    print("stopping_metric: input_value = " + str(air_grid1.models[0].full_parameters['stopping_metric']['input_value']) + ",  actual_value = " + str(air_grid1.models[0].full_parameters['stopping_metric']['actual_value']))
+    print("histogram_type: input_value = " + str(air_grid1.models[0].full_parameters['histogram_type']['input_value']) + ",  actual_value = " + str(air_grid1.models[0].full_parameters['histogram_type']['actual_value']))
+    print("fold_assignment: input_value = " + str(air_grid1.models[0].full_parameters['fold_assignment']['input_value']) + ",  actual_value = " + str(air_grid1.models[0].full_parameters['fold_assignment']['actual_value']))
+    print("categorical_encoding: input_value = " + str(air_grid1.models[0].full_parameters['categorical_encoding']['input_value']) + ",  actual_value = " + str(air_grid1.models[0].full_parameters['categorical_encoding']['actual_value']))
+    print("seed: input_value = " + str(air_grid1.models[0].full_parameters['seed']['input_value']) + ",  actual_value = " + str(air_grid1.models[0].full_parameters['seed']['actual_value']))
+
+    print("Model 2 parameters:")
+    print("distribution: input_value = " + str(air_grid1.models[index2].full_parameters['distribution']['input_value']) + ",  actual_value = " + str(air_grid1.models[index2].full_parameters['distribution']['actual_value']))
+    print("stopping_metric: input_value = " + str(air_grid1.models[index2].full_parameters['stopping_metric']['input_value']) + ",  actual_value = " + str(air_grid1.models[index2].full_parameters['stopping_metric']['actual_value']))
+    print("histogram_type: input_value = " + str(air_grid1.models[index2].full_parameters['histogram_type']['input_value']) + ",  actual_value = " + str(air_grid1.models[index2].full_parameters['histogram_type']['actual_value']))
+    print("fold_assignment: input_value = " + str(air_grid1.models[index2].full_parameters['fold_assignment']['input_value']) + ",  actual_value = " + str(air_grid1.models[index2].full_parameters['fold_assignment']['actual_value']))
+    print("categorical_encoding: input_value = " + str(air_grid1.models[index2].full_parameters['categorical_encoding']['input_value']) + ",  actual_value = " + str(air_grid1.models[index2].full_parameters['categorical_encoding']['actual_value']))
+    print("seed: input_value = " + str(air_grid1.models[index2].full_parameters['seed']['input_value']) + ",  actual_value = " + str(air_grid1.models[index2].full_parameters['seed']['actual_value']))
+
+
+
+
 
     assert pyunit_utils.equal_two_arrays(metric_list1, metric_list2, 1e-5, 1e-6, False), \
                 "Training_rmse are different between the two grid search models.  Tests are supposed to be repeatable in " \

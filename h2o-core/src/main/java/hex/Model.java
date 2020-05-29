@@ -2876,4 +2876,11 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
             .filter(this::isFeatureUsedInPredict)
             .toArray(String[]::new);
   }
+  
+  public boolean isDistributionHuber() {
+    if (_parms._distribution == DistributionFamily.huber) {
+      return true;
+    }
+    return false;
+  }
 }

@@ -2305,5 +2305,13 @@ public class DeepLearningModel extends Model<DeepLearningModel,DeepLearningModel
     int featureIdx = ArrayUtils.find(varImp()._names, featureName);
     return featureIdx != -1 && (double) varImp()._varimp[featureIdx] != 0d;
   }
+
+  @Override
+  public boolean isDistributionHuber() {
+    if (_parms._distribution == DistributionFamily.huber || get_params()._distribution == DistributionFamily.huber) {
+      return true;
+    }
+    return false;
+  }
 }
 

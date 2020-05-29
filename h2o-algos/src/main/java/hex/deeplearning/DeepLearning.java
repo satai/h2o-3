@@ -603,13 +603,4 @@ public class DeepLearning extends ModelBuilder<DeepLearningModel,DeepLearningMod
     assert(tspi != 0 && tspi != -1 && tspi != -2 && tspi >= 1);
     return tspi;
   }
-  
-  @Override
-  public boolean isDistributionHuber() {
-    if (_parms._distribution == DistributionFamily.huber
-            || (_parms._distribution == DistributionFamily.AUTO && nclasses() == 1 && _parms._loss == DeepLearningParameters.Loss.Huber)) {
-      return true;
-    }
-    return false;
-  }
 }

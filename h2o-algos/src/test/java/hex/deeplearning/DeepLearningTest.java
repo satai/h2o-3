@@ -2223,7 +2223,7 @@ public class DeepLearningTest extends TestUtil {
       parms2._loss = DeepLearningParameters.Loss.Huber;
       parms2._categorical_encoding = Model.Parameters.CategoricalEncodingScheme.Binary;
 
-      dl2 = new DeepLearning(parms).trainModel().get();
+      dl2 = new DeepLearning(parms2).trainModel().get();
 
       Assert.assertEquals(87.26206135855, ((ModelMetricsRegression)dl2._output._training_metrics)._mean_residual_deviance,1e-4);
       Assert.assertEquals(87.26206135855, ((ModelMetricsRegression)dl2._output._validation_metrics)._mean_residual_deviance,1e-4);

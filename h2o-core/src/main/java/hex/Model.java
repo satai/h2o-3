@@ -2878,9 +2878,6 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
   }
   
   public boolean isDistributionHuber() {
-    if (_parms._distribution == DistributionFamily.huber) {
-      return true;
-    }
-    return false;
+    return _parms._distribution == DistributionFamily.huber;
   }
 }

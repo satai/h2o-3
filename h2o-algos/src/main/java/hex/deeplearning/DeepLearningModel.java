@@ -2308,10 +2308,7 @@ public class DeepLearningModel extends Model<DeepLearningModel,DeepLearningModel
 
   @Override
   public boolean isDistributionHuber() {
-    if (_parms._distribution == DistributionFamily.huber || get_params()._distribution == DistributionFamily.huber) {
-      return true;
-    }
-    return false;
+    return _parms._distribution == DistributionFamily.huber || get_params()._distribution == DistributionFamily.huber;
   }
 }
 

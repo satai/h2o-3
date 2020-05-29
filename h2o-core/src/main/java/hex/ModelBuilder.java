@@ -749,7 +749,7 @@ abstract public class ModelBuilder<M extends Model<M,P,O>, P extends Model.Param
       mbs[i] = cvModel.scoreMetrics(adaptFr);
       if (nclasses() == 2 /* need holdout predictions for gains/lift table */
               || _parms._keep_cross_validation_predictions
-              || (isDistributionHuber() /*need to compute quantiles on abs error of holdout predictions*/)) {
+              || (cvModel.isDistributionHuber() /*need to compute quantiles on abs error of holdout predictions*/)) {
         String predName = cvModelBuilders[i].getPredictionKey();
         cvModel.predictScoreImpl(cvValid, adaptFr, predName, _job, true, CFuncRef.NOP);
         DKV.put(cvModel);
@@ -802,7 +802,7 @@ abstract public class ModelBuilder<M extends Model<M,P,O>, P extends Model.Param
     }
 
     Frame holdoutPreds = null;
-    if (_parms._keep_cross_validation_predictions || (nclasses()==2 /*GainsLift needs this*/ || isDistributionHuber())) {
+    if (_parms._keep_cross_validation_predictions || (nclasses()==2 /*GainsLift needs this*/ || mainModel.isDistributionHuber())) {
       Key<Frame> cvhp = Key.make("cv_holdout_prediction_" + mainModel._key.toString());
       if (_parms._keep_cross_validation_predictions) //only show the user if they asked for it
         mainModel._output._cross_validation_holdout_predictions_frame_id = cvhp;
@@ -842,13 +842,6 @@ abstract public class ModelBuilder<M extends Model<M,P,O>, P extends Model.Param
     mainModel._output._total_run_time = _build_model_countdown.elapsedTime();
     // Now, the main model is complete (has cv metrics)
     DKV.put(mainModel);
-  }
-  
-  public boolean isDistributionHuber() {
-    if (_parms._distribution == DistributionFamily.huber) {
-      return true;
-    }
-    return false;
   }
 
   private String getPredictionKey() {

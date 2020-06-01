@@ -2041,8 +2041,8 @@ public class GLM extends ModelBuilder<GLMModel,GLMParameters,GLMOutput> {
       _state.setLikelihood(_ginfoStart._likelihood);
       int histLen = devHistoryTrain.length;
       for (int ind=0; ind < histLen; ind++) {
-        devHistoryTrain[ind]=Double.NaN;
-        devHistoryTest[ind]=Double.NaN;
+        devHistoryTrain[ind]=0;
+        devHistoryTest[ind]=0;
       }
     }
     
@@ -2187,7 +2187,7 @@ public class GLM extends ModelBuilder<GLMModel,GLMParameters,GLMOutput> {
       int submodelCount = 0;
       for (int alphaInd = 0; alphaInd < _parms._alpha.length; alphaInd++) {
         _state.setAlpha(_parms._alpha[alphaInd]);   // loop through the alphas
-        if (!_parms._HGLM)
+        if (!_parms._HGLM && (alphaInd > 0)) // no need for cold start during the first iteration
           coldStart(devHistoryTrain, devHistoryTest);  // reset beta, lambda, currGram
         _model._output._selected_alpha_idx = alphaInd;
        // if (_state.getLambdaNull()) _parms._lambda[0] = _gmax/Math.max(1e-2, _parms._alpha[alphaInd]);
@@ -2198,7 +2198,7 @@ public class GLM extends ModelBuilder<GLMModel,GLMParameters,GLMOutput> {
             break;// iterations accumulate across all lambda/alpha values
           _model._output._selected_lambda_idx = i;
           _model._output._selected_submodel_idx = submodelCount;
-          if (!_parms._HGLM && (_parms._cold_start || (!_parms._lambda_search && _parms._cold_start))) // default: cold_start for non lambda_search
+          if ((i > 0) && (!_parms._HGLM && (_parms._cold_start || (!_parms._lambda_search && _parms._cold_start)))) // default: cold_start for non lambda_search
             coldStart(devHistoryTrain, devHistoryTest);
           Submodel sm = computeSubmodel(_model._output._selected_submodel_idx, _parms._lambda[i]);
           submodelCount++;  // updata submodel index count here

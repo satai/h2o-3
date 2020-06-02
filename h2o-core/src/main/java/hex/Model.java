@@ -854,6 +854,7 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
     public long _end_time;
     public long _run_time;
     public long _total_run_time; // includes building of cv models
+    public static int INFORMATION_TABLE_NUM_ROWS = 2;
     protected void startClock() { _start_time = System.currentTimeMillis(); }
     protected void stopClock()  {
       _end_time   = System.currentTimeMillis();
@@ -1113,7 +1114,7 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
       colHeaders.add("Checksum"); colTypes.add("long"); colFormat.add("%d");
       colHeaders.add("ESPC"); colTypes.add("string"); colFormat.add("%d");
 
-      final int rows = 2;
+      final int rows = getInformationTableNumRows();
       TwoDimTable table = new TwoDimTable(
               "Input Frames Information", null,
               new String[rows],
@@ -1130,6 +1131,10 @@ public abstract class Model<M extends Model<M,P,O>, P extends Model.Parameters, 
       table.set(1, 2, modelBuilder._valid != null ? Arrays.toString(modelBuilder.valid().anyVec().espc()) : -1);
 
       return table;
+    }
+    
+    public int getInformationTableNumRows() {
+      return INFORMATION_TABLE_NUM_ROWS;
     }
   } // Output
 

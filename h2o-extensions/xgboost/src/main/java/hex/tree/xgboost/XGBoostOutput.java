@@ -46,35 +46,17 @@ public class XGBoostOutput extends Model.Output implements Model.GetNTrees, Plat
 
   @Override
   public TwoDimTable createInputFramesInformationTable(ModelBuilder modelBuilder) {
-    List<String> colHeaders = new ArrayList<>();
-    List<String> colTypes = new ArrayList<>();
-    List<String> colFormat = new ArrayList<>();
     XGBoostModel.XGBoostParameters params = (XGBoostModel.XGBoostParameters) modelBuilder._parms;
-
-    colHeaders.add("Input Frame"); colTypes.add("string"); colFormat.add("%s");
-    colHeaders.add("Checksum"); colTypes.add("long"); colFormat.add("%d");
-    colHeaders.add("ESPC"); colTypes.add("string"); colFormat.add("%d");
-
-    final int rows = 3;
-    TwoDimTable table = new TwoDimTable(
-            "Input Frames Information", null,
-            new String[rows],
-            colHeaders.toArray(new String[0]),
-            colTypes.toArray(new String[0]),
-            colFormat.toArray(new String[0]),
-            "");
-
-    table.set(0, 0, "training_frame");
-    table.set(1, 0, "validation_frame");
+    TwoDimTable table = super.createInputFramesInformationTable(modelBuilder);
     table.set(2, 0, "calibration_frame");
-    table.set(0, 1, modelBuilder.train() != null ? modelBuilder.train().checksum() : -1);
-    table.set(1, 1, params._valid != null ? modelBuilder.valid().checksum() : -1);
     table.set(2, 1, params.getCalibrationFrame() != null ? params.getCalibrationFrame().checksum() : -1);
-    table.set(0, 2, modelBuilder.train() != null ? Arrays.toString(modelBuilder.train().anyVec().espc()) : -1);
-    table.set(1, 2, params._valid != null ? Arrays.toString(modelBuilder.valid().anyVec().espc()) : -1);
     table.set(2, 2, params.getCalibrationFrame() != null ? Arrays.toString(params.getCalibrationFrame().anyVec().espc()) : -1);
-
     return table;
+  }
+
+  @Override
+  public int getInformationTableNumRows() {
+    return super.getInformationTableNumRows() + 1;
   }
   
   @Override

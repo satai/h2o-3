@@ -39,7 +39,7 @@ public final class H2ONode extends Iced<H2ONode> implements Comparable {
     
   transient private short _timestamp;
   transient private boolean _removed_from_cloud;
-  transient private boolean _accessed_local_dkv; // Did this remote node ever accessed the local portion of DKV?
+  transient private volatile boolean _accessed_local_dkv; // Did this remote node ever accessed the local portion of DKV?
   transient private IcedHashMap<String, Object> _configuration;
 
   public final boolean isClient() {

@@ -274,7 +274,7 @@ public final class ComputationState {
     int P = _dinfo.fullN();
     _activeBC = _bc;
     _activeData = _activeData != null?_activeData:_dinfo;
-    _allIn = _allIn || _parms._alpha[0]*lambdaNew == 0 || _activeBC.hasBounds();
+    _allIn = _allIn || _alpha*lambdaNew == 0 || _activeBC.hasBounds();
     if (!_allIn) {
       int newlySelected = 0;
       final double rhs = Math.max(0,_alpha * (2 * lambdaNew - lambdaOld));
@@ -686,6 +686,8 @@ public final class ComputationState {
   }
   
   protected void setLikelihood(double llk) { _likelihood = llk; }
+  protected void setAllIn(boolean val) { _allIn = val; }
+  protected void setLambdaSimple(double lambda) { _lambda=lambda; }
 
   protected void setHGLMComputationState(double [] beta, double[] ubeta, double[] psi, double[] phi, 
                                          double hlcorrection, double tau, Frame wpsi, String[] randCoeffNames){
